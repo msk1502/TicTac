@@ -51,8 +51,8 @@ def inputMove(Board, Player, XorO):
 
     #get player inputs
     print(Player, 'it is your turn!')
-    x = input('Enter X coordinate: ')
-    y = input('Enter Y coordinate: ')
+    x = int(input('Enter X coordinate: '))
+    y = int(input('Enter Y coordinate: '))
 
 
     if (
