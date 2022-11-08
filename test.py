@@ -50,11 +50,10 @@ boardDraw = [
         ['X', 'X', 'Y']
         ]
 
-class TestLogic(unittest.TestCase):
 
-    def test_get_winner(Board, XorY):
+def test_get_winner(Board, XorY):
 
-        self.assertEqual(logic.get_winner(Board), XorY)
+    self.assertEqual(logic.get_winner(Board), XorY)
 
         #TODO: Test all functions from logic.py
     
