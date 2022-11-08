@@ -2,7 +2,7 @@
 # or output happens here. The logic in this file
 # should be unit-testable.
 
-
+#creates and returns empty board
 def make_empty_board():
     return [
         [None, None, None],
@@ -10,11 +10,11 @@ def make_empty_board():
         [None, None, None],
     ]
 
-
+#checks if there is a winner.  If there is returns X or O depending upon who won.  Returns None if no winner
 def get_winner(Board):
     
     Winner = None #The Winner of the game. X, O or None if draw
-    Outcome = None
+    Outcome = None #eventual return value
 
     for i in range(3):
         
@@ -55,18 +55,19 @@ def inputMove(Board, Player, XorO):
     y = int(input('Enter Y coordinate: '))
 
 
-    if (
-        Board[x][y] != None or
-        0 > x > len(Board[x]) or 
-        0 > y > len(Board)
-        ):  #checks if the selected space does not equal none or if it is outside the image's bounds
-            print('Invalid Location.  Please enter new coordinates')
+    if 0 > x  or x > 2 or  0 > y or y > 2:  
+        #checks if it is outside the image's bounds
+        print('Outside Board.  Please enter new coordinates between 0 and 2')
+        return inputMove(Board, Player, XorO) #returns board
+    elif Board[y][x] != None:
+        #checks if the selected space does not equal none
+        print('Spot already taken.  Please enter new coordinates')
+        return inputMove(Board, Player, XorO) #returns board
 
-            return inputMove(Board, Player, XorO) #returns board
-
-    #turns row string into list, replaces old with new, then replaces that row
+    #updates a board to player's move
     Board[y][x] = XorO
 
+    #prints current board
     print(Board[0], '\n', Board[1], '\n', Board[2])
 
     return Board
