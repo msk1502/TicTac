@@ -50,8 +50,9 @@ def get_winner(Board):
 def inputMove(Board, Player, XorO):
 
     #get player inputs
-    x = input(Player, 'Enter X coordinate: ')
-    y = input(Player, 'Enter Y coordinate: ')
+    print(Player, 'it is your turn!')
+    x = input('Enter X coordinate: ')
+    y = input('Enter Y coordinate: ')
 
 
     if (
@@ -68,7 +69,6 @@ def inputMove(Board, Player, XorO):
     row[y] = XorO
     Board[x] = ''.join(row)
 
+    print(Board[0], '\n', Board[1], '\n', Board[2])
 
-def other_player(player):
-    """Given the character for a player, returns the other player."""
-    return "O"  # FIXME
+    return Board

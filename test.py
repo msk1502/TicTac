@@ -58,8 +58,8 @@ class TestLogic(unittest.TestCase):
 
         #TODO: Test all functions from logic.py
     
-    def test_inputMove(Board, Player, XorO):
-        
+    def test_inputMove(Board, expectedBoard, Player, XorO):
+        self.assertEqual(logic.inputMove(Board, Player, XorO), expectedBoard)
 
 if _name_ == '_main_':
     unittest.main()
