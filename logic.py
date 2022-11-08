@@ -65,7 +65,7 @@ def inputMove(Board, Player, XorO):
             return inputMove(Board, Player, XorO) #returns board
 
     #turns row string into list, replaces old with new, then replaces that row
-    Board[y][x] = XorO
+    Board[x][y] = XorO
 
     print(Board[0], '\n', Board[1], '\n', Board[2])
 
