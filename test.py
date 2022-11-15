@@ -66,6 +66,10 @@ def test_inputMove(Board, expectedBoard, Player, XorO):
         assert logic.inputMove(Board, Player, XorO) == expectedBoard, 'Returned board not expected' 
         print('test_inputMove2 success')
 
+#test whether AI_Move works
+def test_AI_Move(Board, expectedBoard, XorO):
+        assert logic.AI_Move(Board, expectedBoard, XorO) == expectedBoard, 'Returned board not expected' 
+
 _name_='_main_'
 
 if _name_ == '_main_':

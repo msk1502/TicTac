@@ -43,6 +43,12 @@ def get_winner(Board):
         else:
             Outcome = 'Error'
 
+    #check for draw
+    draw = False
+    flat_Board = [item for row in Board for item in row]
+    if flat_Board.count(None) == 0:
+        Outcome = 'Draw'
+
     """Determines the winner of the given board.
     Returns 'X', 'O', or None."""
     return Outcome
@@ -71,3 +77,78 @@ def inputMove(Board, Player, XorO):
     print(Board[0], '\n', Board[1], '\n', Board[2])
 
     return Board
+
+
+#Chooses move for AI player.  Trys to block emminent wins.  If no emminent wins chooses first None.  Returns updated board
+def AI_Move(Board, XorO):
+   
+   #checks who is the opponent
+    if XorO == 'X':
+        oppon = 'O'
+    else:
+        oppon = 'X'
+
+    columns = [[] for i in range(4)] #empty list of list to build columns
+
+    #checks if two X or O in a row.  Return updated board with move to block win
+    y = 0
+    for row in Board:
+        if row.count(oppon) == 2 and row.count(None) == 1: #checks if two of O or X
+            x = row.index(None)
+            Board[y][x] = XorO
+            print(Board[0], '\n', Board[1], '\n', Board[2])
+            return Board
+
+        #builds columns
+        for i in range(len((row))):
+            columns[i].append(row[i])
+            
+        y +=1
+
+    
+    #checks if two X or O in a column.  Return updated board with move to block win
+    y = 0
+    for column in columns:
+        if column.count(oppon) == 2 and column.count(None) == 1: #checks if two of O or X
+            x = column.index(None)
+            Board[x][y] = XorO
+            print(Board[0], '\n', Board[1], '\n', Board[2])
+            return Board
+
+        y += 1
+    
+    #builds list of list of diagnols
+    Diags = [[Board[0][0], Board[1][1], Board[2][2]], [Board[0][2], Board[1][1], Board[2][0]]]
+
+    #checks if two X or O in a column.  Return updated board with move to block win
+    DiagNum = 0
+    for Diag in Diags:
+        if Diag.count(oppon) == 2 and Diag.count(None) == 1: #checks if two of O or X
+            
+            #if statements to get coordinates of move
+            indexNone = Diag.index(None)
+            if indexNone == 1:
+                Board[1][1] = XorO
+            elif indexNone == 0:
+                if DiagNum == 0:
+                    Board[0][0] = XorO
+                else:
+                    Board[0][2] = XorO
+            elif indexNone == 2:
+                if DiagNum == 0:
+                    Board[2][2] = XorO
+                else:
+                    Board[2][0] = XorO
+            print(Board[0], '\n', Board[1], '\n', Board[2])
+            return Board
+
+        DiagNum += 1
+
+    #if no emminent win returns coordinates of first unoccupied space
+    for x in range(len(Board)):
+        for y in range(len(Board)):
+            if Board[y][x] == None:
+                Board[y][x] = XorO
+                print(Board[0], '\n', Board[1], '\n', Board[2])
+                return Board
+    
