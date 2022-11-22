@@ -1,5 +1,7 @@
 import logic
 
+Board1 = logic.Board()
+
 #Test Boards
 boardEmpty = [
         [None, None, None],
@@ -51,39 +53,57 @@ boardDraw = [
 
 
 #tests whether make_empty_board works
-def test_make_empty_board():
-    assert logic.make_empty_board() == boardEmpty, 'did not make empty board'
-    print('test_make_empty_board success')
+def test_make_empty_board(board):
 
-#tests whether get_winner works
+        board.make_empty_board()
+        assert board.board == boardEmpty, 'did not make empty board'
+        print('test_make_empty_board success')
+
+# #tests whether get_winner works
 def test_get_winner(Board, XorY):
+        boardYVert
+        assert Board.get_winner() == XorY, 'Did not return correct winner'
+        print('test_get_winner success')
 
-    assert logic.get_winner(Board) == XorY, 'Did not return correct winner'
-    print('test_get_winner success')
-
-#tests whether inputMove works    
+# #tests whether inputMove works    
 def test_inputMove(Board, expectedBoard, Player, XorO):
-        assert logic.inputMove(Board, Player, XorO) == expectedBoard, 'Returned board not expected' 
-        print('test_inputMove2 success')
+        Board.inputMove(Player, XorO)
+        assert  Board.board == expectedBoard, 'Returned board not expected' 
+        print('test_inputMove success')
 
-#test whether AI_Move works
+# #test whether AI_Move works
 def test_AI_Move(Board, expectedBoard, XorO):
-        assert logic.AI_Move(Board, expectedBoard, XorO) == expectedBoard, 'Returned board not expected' 
+        Board.AI_Move(XorO) 
+        assert Board.board == expectedBoard, 'Returned board not expected' 
+        print('test_AI_Move success')
 
 _name_='_main_'
 
 if _name_ == '_main_':
-    test_make_empty_board()
-
-    test_get_winner(boardYVert, 'Y')
+        test_make_empty_board(Board1)
+        
+        Board1.board = boardYVert
+        test_get_winner(Board1, 'Y')
 
    #board to check if inputMove works against.  Can change board to try different tests
-    testExpectedBoard = [
-        [None, None, None],
-        [None, None, None],
-        [None, None, 'Y']
-        ]
+        testExpectedBoard = [
+                [None, None, None],
+                [None, None, None],
+                [None, None, 'Y']
+                ]
+        Board1.make_empty_board
+        test_inputMove(Board1, testExpectedBoard, 'Matt', 'Y')
 
-    test_inputMove(boardEmpty, testExpectedBoard, 'Matt', 'Y')
+        #test to see if AI_Move method in Board class works
+        testExpectedBoard = [
+                [None, None, None],
+                ['X', 'X', 'Y'],
+                [None, None, None]
+                ]
+        Board1.board = [
+                [None, None, None],
+                ['X', 'X', None],
+                [None, None, None]
+                ]
 
-
+        test_AI_Move(Board1, testExpectedBoard, 'Y')
