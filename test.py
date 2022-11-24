@@ -77,22 +77,29 @@ def test_AI_Move(Board, expectedBoard, XorO):
         assert Board.board == expectedBoard, 'Returned board not expected' 
         print('test_AI_Move success')
 
+def test_move(AI, XorO, board, expectedBoard):
+        Player1 = logic.Player(AI, XorO, board)
+        curBoard = Player1.move
+        assert curBoard == expectedBoard, 'Returned board not expected'
+        print('Test_move is success')
+
+
 _name_='_main_'
 
 if _name_ == '_main_':
-        test_make_empty_board(Board1)
+        # test_make_empty_board(Board1)
         
-        Board1.board = boardYVert
-        test_get_winner(Board1, 'Y')
+        # Board1.board = boardYVert
+        # test_get_winner(Board1, 'Y')
 
    #board to check if inputMove works against.  Can change board to try different tests
-        testExpectedBoard = [
-                [None, None, None],
-                [None, None, None],
-                [None, None, 'Y']
-                ]
-        Board1.make_empty_board
-        test_inputMove(Board1, testExpectedBoard, 'Matt', 'Y')
+        # testExpectedBoard = [
+        #         [None, None, None],
+        #         [None, None, None],
+        #         [None, None, 'Y']
+        #         ]
+        # Board1.make_empty_board
+        # test_inputMove(Board1, testExpectedBoard, 'Matt', 'Y')
 
         #test to see if AI_Move method in Board class works
         testExpectedBoard = [
@@ -106,4 +113,8 @@ if _name_ == '_main_':
                 [None, None, None]
                 ]
 
-        test_AI_Move(Board1, testExpectedBoard, 'Y')
+        # test_AI_Move(Board1, testExpectedBoard, 'Y')
+        XorO = 'X'
+        AI = False
+
+        # test_move(AI, XorO, Board1.board, testExpectedBoard)
