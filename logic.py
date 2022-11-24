@@ -2,6 +2,130 @@
 # or output happens here. The logic in this file
 # should be unit-testable.
 
+class Player:
+    def __init__(self, XorO, firstOrSecond):
+
+        #checks whether player is AI.  Will continue loop until recieve expected input
+        AIConfirm = None
+        while AIConfirm == None:
+            AIConfirm = input('Is this player an AI?(Y or N) ')
+            if AIConfirm == 'Y' or AIConfirm == 'y' or AIConfirm == 'Yes' or AIConfirm =='YES' or AIConfirm == 'yes':
+                self.AI = True
+            elif AIConfirm == 'N' or AIConfirm == 'n' or AIConfirm == 'No' or AIConfirm == 'NO' or AIConfirm == 'no':
+                self.AI = False
+            else:
+                print('Did not recognize input.  Try Again')
+                AIConfirm = None
+        #inputs name of player
+
+        if self.AI == True:
+            self.name = 'AI' + firstOrSecond
+        elif self.AI == False:
+            self.name = input('Player' + firstOrSecond + ' what is your name? ')
+        self.XorO = XorO
+        print(self.name + ' is ' + XorO)
+
+    #move function for both AI and human players
+    def move(self, board):
+
+        #checks if AI
+        if self.AI == True:
+            #checks who is the opponent
+            if self.XorO == 'X':
+                oppon = 'O'
+            else:
+                oppon = 'X'
+
+            columns = [[] for i in range(4)] #empty list of list to build columns
+
+            #checks if two X or O in a row.  Return updated board with move to block win
+            y = 0
+            for row in board:
+                if row.count(oppon) == 2 and row.count(None) == 1: #checks if two of O or X
+                    x = row.index(None)
+                    board[y][x] = self.XorO
+                    print(board[0], '\n', board[1], '\n', board[2])
+                    return board
+
+            #builds columns
+                for i in range(len((row))):
+                    columns[i].append(row[i])
+            
+                y +=1
+
+    
+            #checks if two X or O in a column.  Return updated board with move to block win
+            y = 0
+            for column in columns:
+                if column.count(oppon) == 2 and column.count(None) == 1: #checks if two of O or X
+                    x = column.index(None)
+                    board[x][y] = self.XorO
+                    print(board[0], '\n', board[1], '\n', board[2])
+                    return board
+
+                y += 1
+    
+            #builds list of list of diagnols
+            Diags = [[board[0][0], board[1][1], board[2][2]], [board[0][2], board[1][1], board[2][0]]]
+
+            #checks if two X or O in a column.  Return updated board with move to block win
+            DiagNum = 0
+            for Diag in Diags:
+                if Diag.count(oppon) == 2 and Diag.count(None) == 1: #checks if two of O or X
+            
+                    #if statements to get coordinates of move
+                    indexNone = Diag.index(None)
+                    if indexNone == 1:
+                        board[1][1] = self.XorO
+                    elif indexNone == 0:
+                        if DiagNum == 0:
+                            board[0][0] = self.XorO
+                        else:
+                            board[0][2] = self.XorO
+                    elif indexNone == 2:
+                        if DiagNum == 0:
+                            board[2][2] = self.XorO
+                        else:
+                            board[2][0] = self.XorO
+                    print(board[0], '\n',board[1], '\n', board[2])
+                    return board
+
+                DiagNum += 1
+
+            #if no emminent win returns coordinates of first unoccupied space
+            for x in range(len(board)):
+                for y in range(len(board)):
+                    if board[y][x] == None:
+                        board[y][x] = self.XorO
+                        print(board[0], '\n', board[1], '\n', board[2])
+                        return board
+        else:
+            #get player inputs
+            print(self.name, 'it is your turn!')
+            x = int(input('Enter X coordinate: '))
+            y = int(input('Enter Y coordinate: '))
+
+
+            if 0 > x  or x > 2 or  0 > y or y > 2:  
+                #checks if it is outside the image's bounds
+                print('Outside Board.  Please enter new coordinates between 0 and 2')
+                return self.move(board) #returns board
+            elif board[y][x] != None:
+                #checks if the selected space does not equal none
+                print('Spot already taken.  Please enter new coordinates')
+                return self.move(board) #returns board
+
+            #updates a board to player's move
+            board[y][x] = self.XorO
+
+            #prints current board
+            print(board[0], '\n', board[1], '\n', board[2])
+            return board
+
+
+    
+
+
 class Board:
     def __init__(self):
         self.board =[
