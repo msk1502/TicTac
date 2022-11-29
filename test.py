@@ -1,6 +1,7 @@
 import logic
 
 Board1 = logic.Board()
+Stats = logic.Stats()
 
 #Test Boards
 boardEmpty = [
@@ -46,8 +47,8 @@ boardYVert = [
         ]
 
 boardDraw = [
-        ['X', 'Y', 'X'],
-        ['Y', 'Y', 'X'],
+        ['X', 'Y', 'Y'],
+        ['Y', 'X', 'X'],
         ['X', 'X', 'Y']
         ]
 
@@ -59,29 +60,31 @@ def test_make_empty_board(board):
         assert board.board == boardEmpty, 'did not make empty board'
         print('test_make_empty_board success')
 
-# #tests whether get_winner works
-def test_get_winner(Board, XorY):
-        boardYVert
-        assert Board.get_winner() == XorY, 'Did not return correct winner'
+#tests whether get_winner works
+def test_get_winner(Board, testBoard, XorY):
+        Board1.board = testBoard
+        curWinner  = Board.get_winner()
+        assert curWinner == XorY, 'Did not return correct winner'
         print('test_get_winner success')
 
-# #tests whether inputMove works    
-def test_inputMove(Board, expectedBoard, Player, XorO):
-        Board.inputMove(Player, XorO)
-        assert  Board.board == expectedBoard, 'Returned board not expected' 
-        print('test_inputMove success')
-
-# #test whether AI_Move works
-def test_AI_Move(Board, expectedBoard, XorO):
-        Board.AI_Move(XorO) 
-        assert Board.board == expectedBoard, 'Returned board not expected' 
-        print('test_AI_Move success')
-
-def test_move(AI, XorO, board, expectedBoard):
-        Player1 = logic.Player(AI, XorO, board)
-        curBoard = Player1.move
+#tests whether move works
+def test_move(XorO,firstOrSecond, board, expectedBoard):
+        Player1 = logic.Player(XorO,firstOrSecond)
+        print(board)
+        curBoard = Player1.move(board)
         assert curBoard == expectedBoard, 'Returned board not expected'
         print('Test_move is success')
+
+#tests whether updateStats works
+def test_StatsUpdate(stats, gameID, player1, player2, winner):
+        stats.updateStats(gameID, player1, player2, winner)
+        print(stats.gameStats)
+
+#test whether clearStats works
+def test_clearStats(stats):
+        print(stats.gameStats)
+        stats.clearStats()
+        print(stats.gameStats)
 
 
 _name_='_main_'
@@ -90,18 +93,10 @@ if _name_ == '_main_':
         # test_make_empty_board(Board1)
         
         # Board1.board = boardYVert
-        # test_get_winner(Board1, 'Y')
+        # test_get_winner(Board1, boardDraw, 'Draw')
 
-   #board to check if inputMove works against.  Can change board to try different tests
-        # testExpectedBoard = [
-        #         [None, None, None],
-        #         [None, None, None],
-        #         [None, None, 'Y']
-        #         ]
-        # Board1.make_empty_board
-        # test_inputMove(Board1, testExpectedBoard, 'Matt', 'Y')
 
-        #test to see if AI_Move method in Board class works
+        #test to see if move method in player class works
         testExpectedBoard = [
                 [None, None, None],
                 ['X', 'X', 'Y'],
@@ -113,8 +108,9 @@ if _name_ == '_main_':
                 [None, None, None]
                 ]
 
-        # test_AI_Move(Board1, testExpectedBoard, 'Y')
-        XorO = 'X'
-        AI = False
+        # test_move('Y', '1', Board1.board, testExpectedBoard)
 
-        # test_move(AI, XorO, Board1.board, testExpectedBoard)
+        test_StatsUpdate(Stats, 1, 'testPlayer1', 'testPlayer2', 'testplayer2 winner')
+
+        test_clearStats(Stats)
+

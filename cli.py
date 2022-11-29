@@ -1,68 +1,59 @@
-from logic import Board
+import logic
 
 _name_ = '_main_'
 
 if _name_ == '_main_':
-    BoardTicTac = Board() #makes empty board
+    BoardTicTac = logic.Board() #makes empty board
+    Stats = logic.Stats() #makes empty stats class
     winner = None #sets winner to none
     play = True #play is the condition that continues game if true
+    gameID = 1
 
-    #get player info and assign X and O
-    AI_Num = input('How many AI? (0, 1, or 2):')
+    #set up player 1
+    Player1 = logic.Player('X', '1')
+    Player2 = logic.Player('Y', '2')
 
-    if AI_Num == '0' or AI_Num == '1':
-        Player1 = input('Player 1 what is your name? ')
-        print(Player1, 'you are X')
-
-        if AI_Num == '0':
-            Player2 = input('Player 2 what is your name? ')
-            print(Player2, 'you are O')
 
     print('Lets play Tic Tac Toe!')
     print(BoardTicTac.board[0], '\n', BoardTicTac.board[1], '\n', BoardTicTac.board[2]) #prints empty board
 
     while play == True: #loop continues while play is true
         
-        #Goes through players 1 turn and players 2 turn in order during each loop.  Checks if player is AI or not. Checks if anyone won between turns
+        #Goes through players 1 turn and players 2 turn in order during each loop.  Checks if anyone won between turns
         if winner == None:
-            if AI_Num != '2':
-                BoardTicTac.inputMove(Player1, 'X')
-                winner = BoardTicTac.get_winner()
-            else:
-                BoardTicTac.AI_Move('X')
-                winner = BoardTicTac.get_winner()   
-
+            BoardTicTac.board = Player1.move(BoardTicTac.board)
+            winner = BoardTicTac.get_winner()
+ 
         if winner == None:
-            if AI_Num == '0':
-                BoardTicTac.inputMove(Player2, 'O')
-                winner = BoardTicTac.get_winner()
-            else:
-                BoardTicTac.AI_Move('O')
-                winner = BoardTicTac.get_winner()
+            BoardTicTac.board = Player2.move(BoardTicTac.board)
+            winner = BoardTicTac.get_winner()
 
         #output if someone has won
         if winner != None:
             if winner == 'Draw':
                 print('Game is a Draw!')
+                playerWinner = Player1.name = 'Draw'
+
             else:
+                if Player1.XorO == winner:
+                    playerWinner = Player1.name
+                else:
+                    playerWinner = Player2.name
                 print(winner, 'has won!')
+
+            Stats.updateStats(gameID, Player1.name, Player2.name, playerWinner) #adds row to stats dataframe
+            print(Stats.gameStats) #prints stats dataframe
 
             playAgain = input('Do you want to play again?(Y/N): ') #asks players if they want to play again
 
             #if yes restarts game with empty board 
             if playAgain == 'Y' or playAgain == 'y' or playAgain == 'Yes' or playAgain =='YES' or playAgain == 'yes':
                 BoardTicTac.make_empty_board()
+                gameID += 1
 
-                #get player info and assign X and O
-                AI_Num = input('How many AI? (0, 1, or 2):')
-
-                if AI_Num == '0' or AI_Num == '1':
-                    Player1 = input('Player 1 what is your name? ')
-                    print(Player1, 'you are X')
-
-                if AI_Num == '0':
-                    Player2 = input('Player 2 what is your name? ')
-                    print(Player2, 'you are O')
+                #get player info
+                Player1 = logic.Player('X', '1')
+                Player2 = logic.Player('Y', '2')
 
                 winner = None
             #if no ends loop completing program
